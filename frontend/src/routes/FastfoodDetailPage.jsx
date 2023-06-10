@@ -29,8 +29,17 @@ const FastfoodDetailPage = () => {
       {selectedFastfood && (
         <>
           <h1 className='text-center display-1'>{selectedFastfood.fastfood.name}</h1>
+          <div className="text-center">
+          <StarRating rating={selectedFastfood.fastfood.average_rating} />
+          <span className='text-info ml-1'>
+              {selectedFastfood.fastfood.count ? `(${selectedFastfood.fastfood.count})`: "(0)"}
+
+          </span>
+
+          </div>
           <div className="mt-3">
             <Reviews reviews={selectedFastfood.reviews} />
+            
           </div>
           <AddReview />
         </>

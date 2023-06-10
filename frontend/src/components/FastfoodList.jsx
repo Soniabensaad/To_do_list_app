@@ -2,6 +2,8 @@ import React, {useContext, useEffect} from 'react';
 import FastfoodFinder from '../apis/FastfoodFinder';
 import { FastfoodContext } from '../context/FastfoodContext';
 import { useNavigate } from 'react-router';
+import StarRating from '../components/StarRating';
+
 
 const FastfoodList = (props) => {
     const {fastfood, setFastfood} = useContext(FastfoodContext);
@@ -40,10 +42,22 @@ const FastfoodList = (props) => {
     const handleRestaurantSelect = (id) => {
       navigate(`/fastfood/${id}`);
     }
+
+    const renderRating = (todos) => {
+      if (!todos.count) {
+        return <span className="text-info">0 reviews</span>
+      }
+      return (
+      <>
+        <StarRating rating={todos.id}/>
+        <span className="text-info ml-1">({todos.count})</span>
+      </>
+      )
+    }
   return (
     <div className="list-group">
       <table className="table table-hover table-dark">
-        <thead className="table-danger">
+        <thead className="table-primary">
           <tr>
             <th scope="col">Fastfood</th>
             <th scope="col">Location</th>
@@ -60,12 +74,12 @@ const FastfoodList = (props) => {
                        <td>{todos.name}</td>
                        <td>{todos.location}</td>
                        <td>{"*".repeat(todos.price_range)}</td>
-                       <td>reviews</td>
+                       <td>{renderRating(todos)}</td>
                        <td>
                         <button onClick={(e) => handleUpdate(e, todos.id)} className="btn btn-success">Update</button>
                         </td>
                        <td>
-                        <button onClick={(e) => handleDelete(e, todos.id)} className="btn btn-warning">Delete</button>
+                        <button onClick={(e) => handleDelete(e, todos.id)} className="btn btn-danger">Delete</button>
                         </td>
                     </tr> 
                 )

@@ -28,7 +28,7 @@ app.get("/api/v1/fastfood/:id", async (req, res) => {
     const { id } = req.params;
     try {
       const fastfoodQuery = await pool.query(
-        "SELECT * FROM fastfood WHERE id = $1",
+        "select * from fastfood left join (select fastfood_id , COUNT(*), TRUNC(AVG(rating), 1) as average_rating from reviews group by fastfood_id) reviews on fastfood.id = reviews.fastfood_id where id = $1;",
         [id]
       );
       const reviewsQuery = await pool.query(
