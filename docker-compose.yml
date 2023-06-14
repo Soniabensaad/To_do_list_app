@@ -1,0 +1,11 @@
+version: '3'
+services:
+  api:
+    image: node:16
+    container_name: api
+    working_dir: /app
+    command: nodemon index
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./:/app"
